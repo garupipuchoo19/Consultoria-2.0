@@ -1,19 +1,56 @@
 <?php
+header('Content-Type: application/json');
+
+// ⚠️ IMPORTANTE: NO mostrar errores como HTML
+ini_set('display_errors', 0);
+error_reporting(0);
+
 require_once "../includes/conexion.php";
-$data = json_decode(file_get_contents("php://input"), true);
 
-$mensaje = $data['mensaje'];
-$cliente_id = $data['cliente_id'];
+// Leer JSON
+$raw = file_get_contents("php://input");
+$data = json_decode($raw, true);
 
-// respuesta básica del bot
-$respuesta_bot = "Gracias por tu mensaje, un asesor te responderá pronto 👨‍💼";
+// Validación fuerte
+if (!$data || !isset($data['cliente_id'], $data['mensaje'])) {
+    echo json_encode([
+        "ok" => false,
+        "error" => "Datos incompletos"
+    ]);
+    exit;
+}
 
-$sql = "INSERT INTO chatbot_mensajes 
-(cliente_id, mensaje_usuario, respuesta_bot) 
-VALUES (?, ?, ?)";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$cliente_id, $mensaje, $respuesta_bot]);
+$cliente_id = (int)$data['cliente_id'];
+$mensaje = trim($data['mensaje']);
 
-echo json_encode([
-  "respuesta_bot"=>$respuesta_bot
-]);
+if ($cliente_id <= 0 || $mensaje === '') {
+    echo json_encode([
+        "ok" => false,
+        "error" => "Datos inválidos"
+    ]);
+    exit;
+}
+
+try {
+    $sql = "INSERT INTO chatbot_mensajes 
+            (cliente_id, mensaje_usuario, respuesta_bot)
+            VALUES (?, ?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        $cliente_id,
+        $mensaje,
+        "Gracias por tu mensaje, un asesor te responderá pronto 👨‍💼"
+    ]);
+
+    echo json_encode([
+        "ok" => true,
+        "respuesta_bot" => "Gracias por tu mensaje, un asesor te responderá pronto 👨‍💼"
+    ]);
+} catch (Exception $e) {
+    // ⚠️ NUNCA devolver HTML
+    echo json_encode([
+        "ok" => false,
+        "error" => "Error interno al guardar mensaje"
+    ]);
+}

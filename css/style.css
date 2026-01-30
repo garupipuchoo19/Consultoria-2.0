@@ -190,12 +190,13 @@ body {
   z-index: 998;
 }
 
-/* ==================================================
-   CHATBOT PÚBLICO
-   ================================================== */
+/* ================================
+   CHATBOT PUBLICO - FIX CLICK
+   ================================ */
+
 .chat-widget {
-  width: 420px;              /* MÁS ANCHO */
-  height: 560px;             /* MÁS ALTO */
+  width: 420px;
+  height: 560px;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 12px 30px rgba(0,0,0,.2);
@@ -203,6 +204,57 @@ body {
   flex-direction: column;
   overflow: hidden;
   font-size: 14px;
+  position: relative;
+}
+
+.chat-header {
+  background: #2563eb;
+  color: #fff;
+  padding: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f8fafc;
+  z-index: 1;
+}
+
+.lead-form,
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+  z-index: 10;              /* 🔑 CLAVE */
+  position: relative;       /* 🔑 CLAVE */
+}
+
+.lead-form input,
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+}
+
+.lead-form button,
+.chat-input button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-input button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
 }
 
 

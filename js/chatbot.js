@@ -1,90 +1,110 @@
-let clienteId = null;
-let ultimaRespuestaAdmin = null;
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ===== Utilidad para mostrar mensajes ===== */
-function addMsg(text, type){
-  const box = document.getElementById("chat-messages");
-  const div = document.createElement("div");
-  div.className = "msg " + type;
-  div.innerText = text;
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
-}
+  let clienteId = null;
+  let ultimaRespuestaAdmin = null;
 
-/* ===== Validar e iniciar chat ===== */
-document.getElementById("btnConfirmar").addEventListener("click", () => {
-  const correo = document.getElementById("correo").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
+  /* =========================
+     UTILIDAD: MOSTRAR MENSAJES
+     ========================= */
+  function addMsg(text, type) {
+    const box = document.getElementById("chat-messages");
+    if (!box) return;
 
-  if (!correo || !telefono) {
-    alert("Debes ingresar correo y teléfono para continuar.");
-    return;
+    const div = document.createElement("div");
+    div.className = "msg " + type;
+    div.innerText = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(correo)) {
-    alert("Ingresa un correo válido.");
-    return;
-  }
+  /* =========================
+     GUARDAR DATOS (OPCIONAL)
+     ========================= */
+  const btnGuardar = document.getElementById("btnGuardar");
+  if (btnGuardar) {
+    btnGuardar.addEventListener("click", () => {
+      const correo = document.getElementById("correo").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
 
-  // GUARDAR LEAD Y DESBLOQUEAR CHAT
-  fetch("api/guardar_lead.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ correo, telefono })
-  })
-  .then(r => r.json())
-  .then(d => {
-    if (d.ok) {
-      clienteId = d.cliente_id;
-
-      // 🔓 DESBLOQUEO REAL
-      document.getElementById("lead-form").classList.add("hidden");
-      document.getElementById("chat-input").classList.remove("hidden");
-
-      document.getElementById("mensaje").disabled = false;
-      document.getElementById("btnEnviar").disabled = false;
-
-      addMsg(
-        "Hola 👋 Hemos confirmado tus datos. ¿En qué podemos ayudarte?",
-        "bot"
-      );
-    }
-  });
-});
-
-/* ===== Enviar mensaje ===== */
-document.getElementById("btnEnviar").addEventListener("click", () => {
-  const msgInput = document.getElementById("mensaje");
-  const msg = msgInput.value.trim();
-  if (!msg || !clienteId) return;
-
-  addMsg(msg, "user");
-  msgInput.value = "";
-
-  fetch("api/enviar_mensaje.php",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ cliente_id: clienteId, mensaje: msg })
-  })
-  .then(r => r.json())
-  .then(d => {
-    if (d.respuesta_bot) {
-      addMsg(d.respuesta_bot, "bot");
-    }
-  });
-});
-
-/* ===== Consultar respuestas del admin ===== */
-setInterval(() => {
-  if (!clienteId) return;
-
-  fetch("api/consultar_respuesta_admin.php?cliente_id=" + clienteId)
-    .then(r => r.json())
-    .then(data => {
-      if (data.respuesta && data.respuesta !== ultimaRespuestaAdmin) {
-        ultimaRespuestaAdmin = data.respuesta;
-        addMsg("Soporte: " + data.respuesta, "admin");
+      if (!correo && !telefono) {
+        addMsg("Puedes escribir sin guardar tus datos 👍", "bot");
+        return;
       }
+
+      fetch("api/guardar_lead.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo, telefono })
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (d.ok) {
+          clienteId = d.cliente_id;
+          addMsg("Datos guardados correctamente 👍", "bot");
+        } else {
+          addMsg("No se pudieron guardar los datos.", "bot");
+        }
+      })
+      .catch(() => {
+        addMsg("⚠️ Error al guardar los datos.", "bot");
+      });
     });
-}, 5000);
+  }
+
+  /* =========================
+     ENVIAR MENSAJE (SIEMPRE ACTIVO)
+     ========================= */
+  const btnEnviar = document.getElementById("btnEnviar");
+  if (btnEnviar) {
+    btnEnviar.addEventListener("click", () => {
+      const msgInput = document.getElementById("mensaje");
+      if (!msgInput) return;
+
+      const msg = msgInput.value.trim();
+      if (!msg) return;
+
+      addMsg(msg, "user");
+      msgInput.value = "";
+
+      fetch("api/enviar_mensaje.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cliente_id: clienteId || 0,
+          mensaje: msg
+        })
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (d.ok && d.respuesta_bot) {
+          addMsg(d.respuesta_bot, "bot");
+        } else {
+          addMsg("⚠️ No se pudo procesar el mensaje.", "bot");
+        }
+      })
+      .catch(() => {
+        addMsg("⚠️ Error de comunicación con el servidor.", "bot");
+      });
+    });
+  }
+
+  /* =========================
+     RESPUESTAS DEL ADMIN (POLLING)
+     ========================= */
+  setInterval(() => {
+    if (!clienteId) return;
+
+    fetch("api/consultar_respuesta_admin.php?cliente_id=" + clienteId)
+      .then(r => r.json())
+      .then(data => {
+        if (data.respuesta && data.respuesta !== ultimaRespuestaAdmin) {
+          ultimaRespuestaAdmin = data.respuesta;
+          addMsg("Soporte: " + data.respuesta, "admin");
+        }
+      })
+      .catch(() => {
+        // silencioso para no molestar al usuario
+      });
+  }, 5000);
+
+});

@@ -13,25 +13,18 @@
 
   <div id="chat-messages" class="chat-messages"></div>
 
-  <!-- Datos del cliente -->
-    <div id="lead-form" class="lead-form">
-    <input type="email" id="correo" placeholder="Tu correo" required>
-    <input type="text" id="telefono" placeholder="Tu teléfono" required>
+  <!-- Datos del cliente (opcional) -->
+<div class="lead-form">
+  <input type="email" id="correo" placeholder="Tu correo (opcional)">
+  <input type="text" id="telefono" placeholder="Tu teléfono (opcional)">
+  <button id="btnGuardar" type="button">Guardar datos</button>
+</div>
 
-    <!-- BOTÓN CLAVE -->
-    <button id="btnConfirmar">Confirmar e iniciar chat</button>
-    </div>
-
-  <!-- Entrada de mensajes -->
-    <div id="chat-input" class="chat-input hidden">
-    <input 
-        type="text" 
-        id="mensaje" 
-        placeholder="Escribe tu mensaje..." 
-        disabled
-    >
-    <button id="btnEnviar" disabled>Enviar</button>
-    </div>
+<!-- Chat siempre activo -->
+<div class="chat-input">
+  <input type="text" id="mensaje" placeholder="Escribe tu mensaje...">
+  <button id="btnEnviar" type="button">Enviar</button>
+</div>
 
 </div>
 
