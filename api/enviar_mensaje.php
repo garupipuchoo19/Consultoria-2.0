@@ -1,4 +1,5 @@
 <?php
+require_once "../mail/enviar_correo.php";
 header('Content-Type: application/json');
 
 // ⚠️ IMPORTANTE: NO mostrar errores como HTML
@@ -42,6 +43,8 @@ try {
         $mensaje,
         "Gracias por tu mensaje, un asesor te responderá pronto 👨‍💼"
     ]);
+    enviarCorreoAdmin($mensaje);
+
 
     echo json_encode([
         "ok" => true,

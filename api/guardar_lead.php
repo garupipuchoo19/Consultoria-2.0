@@ -70,7 +70,7 @@ try {
        ===================================== */
     if ($correo !== '') {
         // Si falla el correo, NO rompe nada
-        enviarCorreoCliente($correo);
+        enviarCorreoConfirmacion($correo);
     }
 
     /* =====================================
