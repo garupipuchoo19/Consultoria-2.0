@@ -1,5 +1,5 @@
 <?php
-include("config/conexion.php");
+include("../config/conexion.php");
 
 $servicios = $conexion->query("SELECT nombre, descripcion FROM servicios WHERE activo = 1");
 $contactos = $conexion->query("SELECT * FROM contactos");
