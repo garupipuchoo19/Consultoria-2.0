@@ -99,6 +99,19 @@
     </div>
 </section>
 
+<!-- BOTÓN CHAT -->
+<button id="open-chat" class="chat-btn">💬</button>
+
+<!-- CHATBOT -->
+<iframe 
+  id="chat-frame" 
+  src="chatbot.php" 
+  title="Chat de soporte">
+</iframe>
+
+<script src="js/main.js"></script>
+
+
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
     <div class="container">

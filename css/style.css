@@ -1,130 +1,403 @@
+/* ==================================================
+   RESET GENERAL
+   ================================================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
+/* ==================================================
+   ESTILOS BASE
+   ================================================== */
 body {
-    background: #f5f7fb;
-    color: #333;
+  background: #f5f7fb;
+  color: #333;
 }
 
 .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 40px 20px;
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-/* Header */
+.hidden {
+  display: none;
+}
+
+/* ==================================================
+   HEADER PÚBLICO
+   ================================================== */
 .header {
-    background: #0f172a;
-    color: #fff;
-    position: sticky;
-    top: 0;
+  background: #0f172a;
+  color: #fff;
+  position: sticky;
+  top: 0;
 }
 
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .nav a {
-    color: #fff;
-    margin-left: 20px;
-    text-decoration: none;
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
 }
 
 .btn-primary {
-    background: #2563eb;
-    padding: 8px 14px;
-    border-radius: 6px;
+  background: #2563eb;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
-/* Hero */
+/* ==================================================
+   HERO / PORTADA
+   ================================================== */
 .hero {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
-    color: #fff;
-    text-align: center;
-    padding: 80px 20px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
 }
 
 .hero h2 {
-    font-size: 36px;
-    margin-bottom: 15px;
+  font-size: 36px;
+  margin-bottom: 15px;
 }
 
-/* Sections */
+/* ==================================================
+   SECCIONES PÚBLICAS
+   ================================================== */
 .section {
-    background: #fff;
+  background: #fff;
 }
 
 .section.alt {
-    background: #eef2ff;
+  background: #eef2ff;
 }
 
 .section h2 {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
-/* Cards */
+/* ==================================================
+   CARDS (SERVICIOS / PORTAFOLIO)
+   ================================================== */
 .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0,0,0,.08);
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
 }
 
-/* Lists */
+/* ==================================================
+   LISTAS
+   ================================================== */
 .list {
-    list-style: none;
+  list-style: none;
 }
 
 .list li {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
-/* Contact */
+/* ==================================================
+   FORMULARIO DE CONTACTO
+   ================================================== */
 .contact-form {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .contact-form input {
-    padding: 10px;
-    flex: 1;
+  padding: 10px;
+  flex: 1;
 }
 
 .contact-form button {
-    padding: 10px 20px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
+  padding: 10px 20px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
 }
 
-/* Footer */
+/* ==================================================
+   FOOTER
+   ================================================== */
 .footer {
-    background: #0f172a;
-    color: #fff;
-    text-align: center;
-    padding: 25px;
+  background: #0f172a;
+  color: #fff;
+  text-align: center;
+  padding: 25px;
 }
 
 .footer a {
-    color: #93c5fd;
-    display: block;
-    margin-top: 10px;
+  color: #93c5fd;
+  display: block;
+  margin-top: 10px;
+}
+
+/* ==================================================
+   BOTÓN FLOTANTE CHAT
+   ================================================== */
+.chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  z-index: 1000;
+}
+
+/* ==================================================
+   IFRAME CHATBOT
+   ================================================== */
+#chat-frame {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 440px;     /* un poco más que el widget */
+  height: 600px;    /* más alto */
+  border: none;
+  display: none;
+  z-index: 998;
+}
+
+/* ==================================================
+   CHATBOT PÚBLICO
+   ================================================== */
+.chat-widget {
+  width: 420px;              /* MÁS ANCHO */
+  height: 560px;             /* MÁS ALTO */
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+
+.chat-header {
+  background: #2563eb;
+  color: #fff;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f8fafc;
+}
+
+.lead-form button {
+  white-space: nowrap;   /* evita que el texto se parta */
+  font-size: 13px;
+}
+
+.msg {
+  margin-bottom: 8px;
+}
+
+.msg.user {
+  text-align: right;
+}
+
+.msg.bot {
+  color: #374151;
+}
+
+.msg.admin {
+  color: #065f46;
+  font-weight: 600;
+}
+
+/* ==================================================
+   CHAT INPUT / LEAD FORM
+   ================================================== */
+.lead-form,
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.lead-form input,
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+}
+
+.chat-input button,
+.lead-form button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.chat-input button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   ADMIN HEADER
+   ================================================== */
+.admin-header {
+  background: #0f172a;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ==================================================
+   DASHBOARD
+   ================================================== */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.dash-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  text-align: center;
+}
+
+.dash-card h3 {
+  font-size: 32px;
+  color: #2563eb;
+}
+
+.dashboard-actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+/* ==================================================
+   TABLAS ADMIN
+   ================================================== */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: left;
+}
+
+.admin-table thead {
+  background: #2563eb;
+  color: #fff;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* ==================================================
+   BADGES
+   ================================================== */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badge.chatbot {
+  background: #16a34a;
+}
+
+.badge.contacto {
+  background: #0284c7;
+}
+
+/* ==================================================
+   CHATBOT ADMIN
+   ================================================== */
+.chat-admin-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  margin-bottom: 25px;
+}
+
+.chat-admin-client {
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 8px;
+}
+
+.chat-msg {
+  background: #f1f5f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.chat-admin-card textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  margin-bottom: 10px;
+  resize: vertical;
 }
