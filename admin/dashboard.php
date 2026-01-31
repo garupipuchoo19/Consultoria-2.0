@@ -8,6 +8,7 @@ $totalMensajes = $pdo->query("SELECT COUNT(*) FROM chatbot_mensajes")->fetchColu
 $pendientes = $pdo->query("SELECT COUNT(*) FROM chatbot_mensajes WHERE estado='pendiente'")->fetchColumn();
 $atendidos = $pdo->query("SELECT COUNT(*) FROM chatbot_mensajes WHERE estado='atendido'")->fetchColumn();
 $totalCorreos = $pdo->query("SELECT COUNT(*) FROM correos_enviados")->fetchColumn();
+include "../includes/header.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
