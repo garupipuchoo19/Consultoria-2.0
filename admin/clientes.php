@@ -6,6 +6,7 @@ $clientes = $pdo->query("
   SELECT * FROM clientes
   ORDER BY fecha_registro DESC
 ")->fetchAll();
+include "../includes/header.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">

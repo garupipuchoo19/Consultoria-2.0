@@ -8,6 +8,7 @@ $mensajes = $pdo->query("
   LEFT JOIN clientes c ON c.id = cm.cliente_id
   ORDER BY cm.fecha DESC
 ")->fetchAll();
+include "../includes/header.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
